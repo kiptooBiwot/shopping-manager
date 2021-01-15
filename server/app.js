@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const AuthRoutes = require("./routes/Auth.router");
 const UserRouters = require("./routes/User.router");
 const ProductRoutes = require('./routes/Product.routes')
+const ShopRoutes = require('./routes/Shop.routes')
 
 // middleware
 const AuthMiddleware = require("./middleware/Auth.middleware");
@@ -47,6 +48,10 @@ app.use('/api/v1/products',
   AuthMiddleware.userIsLoggedIn,
   ProductRoutes
 )
+app.use('/api/v1/shops',
+  AuthMiddleware.userIsLoggedIn,
+  AuthMiddleware.userIsAdmin,
+  ShopRoutes)
 
 app.get("/", (req, res) => {
   res.send("Welcome to Shopping Manager App!");

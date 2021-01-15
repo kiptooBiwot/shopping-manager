@@ -42,7 +42,7 @@ module.exports.createProduct = async (req, res, next) => {
 module.exports.editProduct = async (req, res, next) => {
   try {
 
-    console.log(req.body)
+    // console.log(req.body)
     // const  id = req.params.id,
     // const productUpdate = req.body,
     // const options = { new: true }
@@ -73,6 +73,17 @@ module.exports.deleteProduct = async (req, res, next) => {
       message: 'Product deleted',
       deletedProduct: deletedProduct
     })
+  } catch (error) {
+    next(createError(error))
+  }
+}
+
+module.exports.editQuantities = async (req, res, next) => {
+  try {
+    const id = req.params.productId
+
+    const 
+
   } catch (error) {
     next(createError(error))
   }

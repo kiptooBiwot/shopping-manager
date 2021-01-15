@@ -77,3 +77,35 @@ module.exports.editProductValidation = async (req, res, next) => {
     next();
   }
 }
+
+module.exports.editProductQtyValidation = async (req, res, next) => {
+  // Create schema object
+  const schema = joi.object({
+    [process.env.STORE1]: joi.number().min(0).required(),
+    [process.env.STORE2]: joi.number().min(0).required(),
+    [process.env.STORE3]: joi.number().min(0).required()
+  });
+
+  // Schema options
+  const options = {
+    abortEarly: false, //include all errors
+    allUnknown: true, //ignore unknown props
+    stripUnknown: true, //remove unknown props
+  };
+
+  // validate request body against the schema
+  const { error, value } = schema.validate(req.body, options);
+
+  if (error) {
+    // On fail, return comma separated errors
+    next(
+      createError(
+        `Validation errors: ${error.details.map((x) => x.message).join(", ")}`
+      )
+    );
+  } else {
+    // on success replace req.body with validated value and trigger the next middleware function
+    req.body = value;
+    next();
+  }
+}
